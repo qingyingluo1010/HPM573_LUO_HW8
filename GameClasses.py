@@ -31,6 +31,7 @@ class Game:
         # calculate the reward from playing a single game
         return 100*self._countWins - 250
 
+
 class SetOfGames:
     def __init__(self, id, prob_head, n_games):
         self._id = id
@@ -120,7 +121,7 @@ class MultipleGameSets:
         self._ids = ids   # ids of game sets
         self._probs_head = prob_head  # probability of head in each coin flip
         self._n_games_in_a_set = n_games_in_a_set  # number of games in each set
-        self._meanAllTotalReward=[]
+
         self._totalRewards = [] # create an empty list where rewards will be stored
         self._sumStat_totalRewards = None
 
@@ -132,16 +133,13 @@ class MultipleGameSets:
             outcomes = set_of_games.simulation()
             # store the total reward from this game set
             self._totalRewards.append(outcomes.get_total_reward())
-            self._meanAllTotalReward.append(outcomes.get_ave_reward())
+
         # summary statistics of total rewards
         self._sumStat_totalRewards = Stat.SummaryStat("Mean Rewards", self._totalRewards)
 
     # get the mean of total rewards
     def get_mean_total_reward(self):
         return self._sumStat_totalRewards.get_mean()
-
-    def get_mean_all_total_reward(self):
-        return self._meanAllTotalReward
 
     # get prediction interval for total reward
     def get_PI_total_reward(self, alpha):
